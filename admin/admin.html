@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Data</title>
+    <link rel="shortcut icon" href="https://img.icons8.com/?size=100&id=7819&format=png&color=000000" type="image/x-icon">
+    <style>
+        /* Dark Gradient Background */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #9e9ca4, #8c0a0a);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        /* Glassmorphism Input Container */
+        .input-container {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-container input {
+            width: 80%;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .input-container button {
+            width: 84%;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: none;
+            background-color: #6a11cb;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .input-container button:hover {
+            background-color: #2575fc;
+        }
+
+        .error-message {
+            color: #F0BB78;
+            font-size: 20px;
+            margin-top: -5px;
+        }
+
+        /* Styled Table for Data */
+        .data-table {
+            width: 90%;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border-collapse: collapse;
+            overflow: hidden;
+            transition: 0.6s ease;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .data-table img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .data-table button {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .data-table button:nth-child(1) {
+            background-color: #6a11cb;
+            color: white;
+            margin: 10px;
+            padding: 10px 20px;
+        }
+
+        .data-table button:nth-child(1):hover {
+            background-color: #2575fc;
+        }
+
+        .data-table button:nth-child(2) {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        .data-table button:nth-child(2):hover {
+            background-color: #cc0000;
+        }
+
+        .loader {
+            font-weight: bold;
+            color: white;
+            font-size: 24px;
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -5%);
+            animation: fade 1s linear infinite alternate;
+        }
+
+        h1 {
+            color: #fff;
+        }
+
+        @keyframes fade {
+            to {
+                opacity: 0;
+            }
+        }
+
+        .pushUp {
+            animation: moveUp 0.4s ease;
+        }
+
+        @keyframes moveUp {
+            from {
+                transform: translateY(20px);
+            }
+
+            to {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Products Data</h1>
+    <div class="loader">Loading...</div>
+
+    <div class="input-container">
+        <input type="hidden" id="id">
+        <input type="text" placeholder="Product Name" id="name" autocomplete="off">
+        <div class="error-message" id="nameError"></div>
+
+        <input type="text" placeholder="Image URL" id="image" autocomplete="off">
+        <div class="error-message" id="imageError"></div>
+
+        <input type="text" placeholder="Category" id="category">
+        <div class="error-message" id="categoryError"></div>
+
+        <input type="text" placeholder="Price" id="price">
+        <div class="error-message" id="priceError"></div>
+        
+        <button onclick="saveData()">Save Data</button>
+    </div>
+
+    <table class="data-table" id="grid-container">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script src="admin.js"></script>
+</body>
+
+</html>
