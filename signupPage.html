@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+
+    <style>
+        /* Moving Gradient Background */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #f3ec78, #af4261, #3498db);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Glassmorphism Card */
+        .form-container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative; /* Ensure it doesn't overlap the toast */
+            z-index: 1;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.866);
+            color: #000;
+            font-size: 16px;
+            outline: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        #sub{
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #sub:hover {
+            background: linear-gradient(90deg, #0072ff, #00c6ff);
+        }
+
+        h2 {
+            color: #FFF8F3;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        p {
+            font-size: 14px;
+            color: #FFFFFF;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .password-container{
+            display: flex;
+            /* border: 2px solid black; */
+            border: 1px solid rgba(255, 255, 255, 0.866);
+            height: 6vh;
+            background-color: rgba(255, 255, 255, 0.948);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        #togglePassword {
+            width: 100px;
+            /* margin: 10px 20px; */
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            border: none;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            padding: 15px 20px;
+            color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideIn 0.5s ease-out forwards, fadeOut 0.5s ease-out 2.5s forwards;
+        }
+
+        .toast.success {
+            background-color: #4caf50;
+        }
+
+        .toast.failure {
+            background-color: #f44336;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+
+<div class="form-container">
+    <h2> SIGN UP </h2>
+    <form action="./login.html" id="signup">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Enter your E-Mail"
+            pattern="[a-z\d.]+@[a-z]+\.[a-z]{2,}" required title="Please enter a valid email address">
+        <div class="password-container">
+            <input type="password" id="password" placeholder="Enter your Password"
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" required
+                title="Password must have 8 characters, including uppercase, lowercase, number, and special character">
+            <button type="button" id="togglePassword">Show</button>
+        </div>
+        <button type="submit" id="sub">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="loginPage.html"> click here</a></p>
+</div>
+
+<!-- Toast container is positioned outside the form-container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+    const firebaseConfig = {
+            apiKey: "AIzaSyAx5iecpRsrwCtXT-ytJ_aiUda8RQDkUmc",
+            authDomain: "app-auth-2b552.firebaseapp.com",
+            projectId: "app-auth-2b552",
+            storageBucket: "app-auth-2b552.firebasestorage.app",
+            messagingSenderId: "997660024494",
+            appId: "1:997660024494:web:b0065f91017b71db0f573f"
+    };
+
+    document.getElementById("signup").addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                showToast('success', 'Registration Successful');
+                window.location.href = "index.html"
+            })
+            .catch(() => {
+                showToast('failure', 'User already exists');
+            });
+    });
+
+    const passwordInput = document.getElementById("password");
+    const toggleButton = document.getElementById("togglePassword");
+
+    toggleButton.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+        toggleButton.textContent = type === "password" ? "Show" : "Hide";
+    });
+
+    function showToast(type, message) {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+
+        const container = document.getElementById('toast-container');
+        container.appendChild(toast);
+
+        setTimeout(() => toast.remove(), 3000);
+    }
+    
+</script>
+</body>
+</html>

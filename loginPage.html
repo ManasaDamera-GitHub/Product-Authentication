@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            background: linear-gradient(45deg, #4facfe, #7be2e7, #956eee, #fbc2eb);
+            background-size: 600% 600%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Moving gradient background */
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.866);
+            background-color: rgba(255, 255, 255, 0.948);
+            color: #000;
+            font-size: 16px;
+            outline: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        #log{
+            background: linear-gradient(45deg, #ff6ec7, #ffc3a0);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #log:hover {
+            background: linear-gradient(45deg, #ffb3d9, #ff6ec7);
+        }
+
+        p {
+            font-size: 14px;
+            color: #FFFFFF;
+            /* Light text color */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            /* Light shadow */
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        h2 {
+            color: #FFF8F3;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        a {
+            color: #f371c1;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #813408;
+        }
+
+        .showbtn {
+            display: flex;
+            border: 1px solid rgba(255, 255, 255, 0.866);
+            background-color: rgba(255, 255, 255, 0.948);
+            border-radius: 10px;
+            height: 6vh;
+        }
+
+        #togglePassword {
+            width: 5vw;
+            height: 5.8vh;
+            font-size: small;
+            border: 2px solid #000;
+            background: linear-gradient(45deg, #ff6ec7, #ffc3a0);
+            border: none;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #togglePassword:hover {
+            background: linear-gradient(45deg, #ffb3d9, #ff6ec7);
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            padding: 15px 20px;
+            color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideIn 0.5s ease-out forwards, fadeOut 0.5s ease-out 2.5s forwards;
+        }
+
+        .toast.success {
+            background-color: #4caf50;
+            /* Green for success */
+        }
+
+        .toast.failure {
+            background-color: #f44336;
+            /* Red for failure */
+        }
+
+        #log{
+            margin-left: 7vw;
+            margin-top: 10px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 style="color:#FFF8F3">Login</h2>
+        <p>Please enter your UserName and Password</p><br>
+        <form action="./user.html" id="signup">
+            <input type="text" id="email" placeholder="Enter your UserName" required autocomplete="off"><br>
+            <div class="showbtn">
+                <input type="password" id="password" placeholder="Enter your Password" required><br><br>
+                <button type="button" id="togglePassword">Show</button>
+            </div>
+            <button type="submit" id="log">Login</button>
+            <br><br><br>
+            <p>Not a member? <a href="signupPage.html">SignUp Now</a></p>
+
+        </form>
+
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAx5iecpRsrwCtXT-ytJ_aiUda8RQDkUmc",
+            authDomain: "app-auth-2b552.firebaseapp.com",
+            projectId: "app-auth-2b552",
+            storageBucket: "app-auth-2b552.firebasestorage.app",
+            messagingSenderId: "997660024494",
+            appId: "1:997660024494:web:b0065f91017b71db0f573f"
+        };
+
+        document.getElementById("signup").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            let email = document.getElementById("email").value.trim()
+            let password = document.getElementById("password").value.trim()
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed up 
+                    const user = userCredential.user;
+                    console.log(email, password)
+                    // alert("Login successfully")
+                    showToast('success', 'Login successful!'); // Success toast
+                    window.location.href = "index.html"
+                    // ...
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // console.error("user did not found")
+                    // alert("user already exist")
+                    // ..
+                    showToast('failure', 'Login failed! Please check your credentials.'); // Failure toast
+                });
+
+
+        });
+        const passwordInput = document.getElementById("password");
+        const toggleButton = document.getElementById("togglePassword");
+
+        toggleButton.addEventListener("click", () => {
+            // Toggle the type attribute
+            const type = passwordInput.type === "password" ? "text" : "password";
+            passwordInput.type = type;
+
+            // Update the button text
+            toggleButton.textContent = type === "password" ? "Show" : "Hide";
+        });
+
+        function showToast(type, message) {
+            // Create a new toast element
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            // window.location.href = "user.html"
+            // Add the toast to the container
+            const container = document.getElementById('toast-container');
+            container.appendChild(toast);
+
+            // Remove the toast after the animation ends
+            setTimeout(() => {
+                toast.remove();
+            }, 3000); // Matches the duration of the animation
+
+        }
+
+    </script>
+</body>
+</html>
+
+
